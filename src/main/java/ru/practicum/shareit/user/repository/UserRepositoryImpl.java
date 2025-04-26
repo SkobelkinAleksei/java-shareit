@@ -2,7 +2,7 @@ package ru.practicum.shareit.user.repository;
 
 import lombok.Data;
 import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
 
