@@ -61,7 +61,7 @@ public class ItemRepositoryImpl implements ItemRepository {
                     && item.getAvailable()) {
                 log.info("Item найден:%s".formatted(item.getId()));
                 itemList.add(ItemMapper.buildItemDto(item));
-            };
+            }
         }
 
         log.info("Результат поиска:%s".formatted(itemList));
