@@ -19,31 +19,37 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public ItemDto getItem(@PathVariable Long itemId) {
+        log.info("Начинаем получение item по id: %s".formatted(itemId));
         return itemService.getItem(itemId);
     }
 
     @PostMapping
-    public ItemDto createItem(@RequestBody @Valid Item item) {
-        return itemService.createItem(item);
+    public ItemDto createItem(@RequestBody @Valid Item item, @RequestHeader("X-Sharer-User-Id") Long userId) {
+        log.info("Начинаем создание item: %s".formatted(item));
+        return itemService.createItem(item, userId);
     }
 
-    @PatchMapping("/{id}")
-    public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long id, @RequestBody Item item) {
-        return itemService.updateItem(id, item);
+    @PatchMapping("/{itemId}")
+    public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long itemId, @RequestBody Item item) {
+        log.info("Начинаем обновление item c id: %s".formatted(itemId));
+        return itemService.updateItem(itemId, item);
     }
 
-    @GetMapping("/{search}")
-    public List<ItemDto> searchItem(@RequestParam("text") String search) {
-        return itemService.searchItem(search);
+    @GetMapping("/search")
+    public List<ItemDto> searchItem(@RequestParam String text) {
+        log.info("Начинаем поиск item: %s".formatted(text));
+        return itemService.searchItem(text);
     }
 
     @GetMapping
     public List<ItemDto> getAllFromUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
+        log.info("Начинаем получение всех item y user c id: %s".formatted(userId));
         return itemService.getAllFromUser(userId);
     }
 
     @DeleteMapping("/{itemId}")
     public void deleteItem(@PathVariable Long itemId) {
+        log.info("Начинаем удаление item c id: %s".formatted(itemId));
         itemService.deleteItem(itemId);
     }
 }

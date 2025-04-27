@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.validator.ValidatorItem;
 
 import java.util.List;
 
@@ -12,21 +13,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
+    private final ValidatorItem validator;
 
     @Override
     public ItemDto getItem(Long itemId) {
+        validator.validItemId(itemId);
         return itemRepository.getItem(itemId);
     }
 
     @Override
-    public ItemDto createItem(Item item) {
-        return itemRepository.createItem(item);
+    public ItemDto createItem(Item item, Long userId) {
+        return itemRepository.createItem(item, userId);
     }
 
     @Override
-    public ItemDto updateItem(Long id, Item item) {
-        item.setId(id);
-        return itemRepository.updateItem(item);
+    public ItemDto updateItem(Long itemId, Item item) {
+        validator.validItemId(itemId);
+        return itemRepository.updateItem(itemId, item);
     }
 
     @Override
