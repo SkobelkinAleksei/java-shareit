@@ -6,6 +6,7 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.validator.ValidatorItem;
+import ru.practicum.shareit.validator.ValidatorUser;
 
 import java.util.List;
 
@@ -13,11 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
-    private final ValidatorItem validator;
+    private final ValidatorItem validatorItem;
+    private final ValidatorUser validatorUser;
 
     @Override
     public ItemDto getItem(Long itemId) {
-        validator.validItemId(itemId);
+        validatorItem.validItemId(itemId);
         return itemRepository.getItem(itemId);
     }
 
@@ -27,9 +29,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto updateItem(Long itemId, Item item) {
-        validator.validItemId(itemId);
-        return itemRepository.updateItem(itemId, item);
+    public ItemDto updateItem(Long userId, Item item, Long itemId) {
+        validatorUser.validUserId(userId);
+        validatorItem.validItemId(itemId);
+        return itemRepository.updateItem(userId, item, itemId);
     }
 
     @Override

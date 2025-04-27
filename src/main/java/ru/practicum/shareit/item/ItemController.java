@@ -30,9 +30,11 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long itemId, @RequestBody Item item) {
-        log.info("Начинаем обновление item c id: %s".formatted(itemId));
-        return itemService.updateItem(itemId, item);
+    public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long userId,
+                              @RequestBody Item item,
+                              @PathVariable Long itemId) {
+        log.info("Начинаем обновление item: %s".formatted(item));
+        return itemService.updateItem(userId, item, itemId);
     }
 
     @GetMapping("/search")

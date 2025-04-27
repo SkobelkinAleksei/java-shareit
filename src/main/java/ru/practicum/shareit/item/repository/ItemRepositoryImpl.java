@@ -38,14 +38,15 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public ItemDto updateItem(Long itemId, Item item) {
+    public ItemDto updateItem(Long userId, Item item,  Long itemId) {
         Item updateItem = items.get(itemId);
+
         log.info("Обновляем Item: %s".formatted(updateItem));
         Optional.ofNullable(item.getName()).ifPresent(updateItem::setName);
         Optional.ofNullable(item.getDescription()).ifPresent(updateItem::setDescription);
         Optional.ofNullable(item.getAvailable()).ifPresent(updateItem::setAvailable);
-        items.put(itemId, updateItem);
         log.info("Успешно обновили Item: %s".formatted(updateItem));
+
         return ItemMapper.buildItemDto(updateItem);
     }
 
@@ -54,31 +55,39 @@ public class ItemRepositoryImpl implements ItemRepository {
         List<ItemDto> itemList = new ArrayList<>();
         String searchTrim = search.trim().toLowerCase();
 
+        log.info("Ищем item с по тексту:%s".formatted(search));
         for (Item item : items.values()) {
             if (item.getName().trim().toLowerCase().equals(searchTrim)
-                    && item.getAvailable())
-            {
+                    && item.getAvailable()) {
+                log.info("Item найден:%s".formatted(item.getId()));
                 itemList.add(ItemMapper.buildItemDto(item));
             };
         }
+
+        log.info("Результат поиска:%s".formatted(itemList));
         return itemList;
     }
 
     @Override
-    public List<ItemDto> getAllFromUser (Long userId) {
+    public List<ItemDto> getAllFromUser(Long userId) {
         List<ItemDto> itemDtoList = new ArrayList<>();
 
+        log.info("Ищем item с id владельца:%s и добавляем в List".formatted(userId));
         for (Item item : items.values()) {
             if (item.getOwner() != null && item.getOwner().equals(userId)) {
+                log.info("Найдено, item c id:%s".formatted(item.getId()));
                 itemDtoList.add(ItemMapper.buildItemDto(item));
             }
         }
+
+        log.info("Готовый список: %s".formatted(itemDtoList));
         return itemDtoList;
     }
 
     @Override
     public void deleteItem(Long itemId) {
         items.remove(itemId);
+        log.info("Удалили item c id:%s".formatted(itemId));
     }
 
     public long getNextId() {

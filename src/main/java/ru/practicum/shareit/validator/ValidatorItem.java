@@ -15,7 +15,7 @@ public class ValidatorItem {
 
     public void validItemId(Long itemId) {
         log.info("Проверяем, что есть item с id: %s".formatted(itemId));
-        if (itemRepository.getItem(itemId) == null || !itemRepository.getItems().containsKey(itemId)) {
+        if (!itemRepository.getItems().containsKey(itemId)) {
             throw new NullPointerException("Item c таким id не найден");
         }
         log.info("Найден Item с id: %s".formatted(itemId));
