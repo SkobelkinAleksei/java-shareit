@@ -16,6 +16,11 @@ public class ItemRepositoryImpl implements ItemRepository {
     private final Map<Long, Item> items = new HashMap<>();
 
     @Override
+    public Map<Long, Item> getItemsMap() {
+        return items;
+    }
+
+    @Override
     public ItemDto getItem(Long itemId) {
         return ItemMapper.buildItemDto(items.get(itemId));
     }

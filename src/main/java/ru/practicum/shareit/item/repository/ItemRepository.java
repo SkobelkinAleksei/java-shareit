@@ -4,8 +4,11 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ItemRepository {
+    Map<Long, Item> getItemsMap();
+
     ItemDto getItem(Long itemId);
 
     ItemDto createItem(Item item, Long userId);

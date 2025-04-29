@@ -23,13 +23,16 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto getItem(Long itemId) {
-        validatorItem.validItemId(itemId);
+        Set<Long> existingItemId = new HashSet<>(itemRepository.getItemsMap().keySet());
+
+        validatorItem.validItemId(itemId, existingItemId);
         return itemRepository.getItem(itemId);
     }
 
     @Override
     public ItemDto createItem(Item item, Long userId) {
         Set<Long> existingId = new HashSet<>(userRepository.getUsersMap().keySet());
+
         validatorUser.validUserId(userId, existingId);
         return itemRepository.createItem(item, userId);
     }
@@ -37,8 +40,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto updateItem(Long userId, Item item, Long itemId) {
         Set<Long> existingId = new HashSet<>(userRepository.getUsersMap().keySet());
+        Set<Long> existingItemId = new HashSet<>(itemRepository.getItemsMap().keySet());
+
         validatorUser.validUserId(userId, existingId);
-        validatorItem.validItemId(itemId);
+        validatorItem.validItemId(itemId, existingItemId);
         return itemRepository.updateItem(userId, item, itemId);
     }
 
