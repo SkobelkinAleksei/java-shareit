@@ -17,6 +17,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public Map<Long, Item> getItemsMap() {
+        log.info("Получение всех items: %s".formatted(items));
         return items;
     }
 

@@ -19,6 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Map<Long, User> getUsersMap() {
+        log.info("Получение всех users: %s".formatted(usersMap));
         return usersMap;
     }
 
