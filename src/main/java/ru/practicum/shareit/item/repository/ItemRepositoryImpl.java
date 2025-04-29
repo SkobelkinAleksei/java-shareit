@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.validator.ValidatorUser;
 
 import java.util.*;
 
@@ -15,7 +14,6 @@ import java.util.*;
 @Repository
 public class ItemRepositoryImpl implements ItemRepository {
     private final Map<Long, Item> items = new HashMap<>();
-    private final ValidatorUser validatorUser;
 
     @Override
     public ItemDto getItem(Long itemId) {
@@ -29,7 +27,6 @@ public class ItemRepositoryImpl implements ItemRepository {
         newItem.setName(item.getName());
         newItem.setDescription(item.getDescription());
         newItem.setAvailable(item.getAvailable());
-        validatorUser.validUserId(userId);
         newItem.setOwner(userId);
         newItem.setRequest(item.getRequest());
         items.put(newItem.getId(), newItem);

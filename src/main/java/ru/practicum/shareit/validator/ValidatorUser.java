@@ -25,10 +25,9 @@ public class ValidatorUser {
     }
 
     public void validUserId(Long id, Set<Long> existingId) {
-        if (existingId.contains(id)) {
+        if (!existingId.contains(id)) {
             throw new NotFoundException("Пользователь с таким id не был найден");
         }
         log.info("Пользователь с таким id найден: %s".formatted(id));
     }
-
 }

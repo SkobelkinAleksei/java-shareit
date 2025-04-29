@@ -5,15 +5,19 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.validator.ValidatorItem;
 import ru.practicum.shareit.validator.ValidatorUser;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
     private final ValidatorItem validatorItem;
     private final ValidatorUser validatorUser;
 
@@ -25,12 +29,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto createItem(Item item, Long userId) {
+        Set<Long> existingId = new HashSet<>(userRepository.getUsersMap().keySet());
+        validatorUser.validUserId(userId, existingId);
         return itemRepository.createItem(item, userId);
     }
 
     @Override
     public ItemDto updateItem(Long userId, Item item, Long itemId) {
-        validatorUser.validUserId(userId);
+        Set<Long> existingId = new HashSet<>(userRepository.getUsersMap().keySet());
+        validatorUser.validUserId(userId, existingId);
         validatorItem.validItemId(itemId);
         return itemRepository.updateItem(userId, item, itemId);
     }
