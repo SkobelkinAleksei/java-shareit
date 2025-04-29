@@ -18,6 +18,11 @@ public class UserRepositoryImpl implements UserRepository {
     private Map<Long, User> usersMap = new HashMap<>();
 
     @Override
+    public Map<Long, User> getUsersMap() {
+        return usersMap;
+    }
+
+    @Override
     public UserDto createUser(User user) {
         User newUser = new User();
         newUser.setId(getNextId());
