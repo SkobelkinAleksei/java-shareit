@@ -8,6 +8,7 @@ import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Data
@@ -16,9 +17,14 @@ public class ItemRepositoryImpl implements ItemRepository {
     private final Map<Long, Item> items = new HashMap<>();
 
     @Override
-    public Map<Long, Item> getItemsMap() {
+    public Map<Long, ItemDto> getItemsMap() {
         log.info("Получение всех items: %s".formatted(items));
-        return items;
+        return items.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> ItemMapper.buildItemDto(entry.getValue())
+                ));
     }
 
     @Override

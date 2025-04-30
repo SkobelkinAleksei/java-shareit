@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ItemRepository {
-    Map<Long, Item> getItemsMap();
+    Map<Long, ItemDto> getItemsMap();
 
     ItemDto getItem(Long itemId);
 

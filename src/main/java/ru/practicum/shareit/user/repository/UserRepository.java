@@ -12,7 +12,7 @@ public interface UserRepository {
 
     UserDto updateUser(Long userId, User user);
 
-    Map<Long, User> getUsersMap();
+    Map<Long, UserDto> getUsersMap();
 
     void deleteUser(Long id);
 }

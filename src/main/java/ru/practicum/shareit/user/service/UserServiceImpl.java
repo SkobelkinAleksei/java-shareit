@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(User user) {
         Set<String> existingEmail = userRepository.getUsersMap().values().stream()
-                                                  .map(User::getEmail)
+                                                  .map(UserDto::getEmail)
                                                   .collect(Collectors.toSet());
         validator.validMail(user, existingEmail);
         return userRepository.createUser(user);
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(Long id, User user) {
         Set<String> existingEmail = userRepository.getUsersMap().values().stream()
-                                                  .map(User::getEmail)
+                                                  .map(UserDto::getEmail)
                                                   .collect(Collectors.toSet());
 
         Set<Long> existingId = new HashSet<>(userRepository.getUsersMap().keySet());

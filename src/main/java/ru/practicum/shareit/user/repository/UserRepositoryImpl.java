@@ -10,6 +10,7 @@ import ru.practicum.shareit.user.mapper.UserMapper;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Data
@@ -18,9 +19,14 @@ public class UserRepositoryImpl implements UserRepository {
     private Map<Long, User> usersMap = new HashMap<>();
 
     @Override
-    public Map<Long, User> getUsersMap() {
+    public Map<Long, UserDto> getUsersMap() {
         log.info("Получение всех users: %s".formatted(usersMap));
-        return usersMap;
+        return usersMap.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> UserMapper.buildUserDto(entry.getValue())
+                ));
     }
 
     @Override
