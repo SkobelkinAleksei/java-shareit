@@ -117,5 +117,5 @@ public class BookingServiceImpl implements BookingService {
         return list.stream()
                 .map(BookingMapper::buildBookingDto)
                 .collect(Collectors.toList());
-    };
+    }
 }
