@@ -60,6 +60,7 @@ public class ItemController {
     @PostMapping("/{itemId}/comment")
     public CommentDto addComment(@PathVariable Long itemId, @RequestHeader("X-Sharer-User-Id") Long userId,
                                  @Valid @RequestBody Comment dto) {
+        log.info("Начинаем добавление к item: %s комментарий".formatted(itemId));
         return itemService.addComment(userId, itemId, dto);
     }
 }
