@@ -109,7 +109,7 @@ public class ItemServiceImpl implements ItemService {
         List<Booking> bookings = bookingRepository.getAllUserBookings(userId, itemId, LocalDateTime.now());
 
         if (bookings.isEmpty()) {
-            throw new ValidationException("Создай бронирование, чтобы оставить комментарий!");
+            throw new ValidationException("Нужно создать бронирование, только потом комментарий");
         }
         return CommentMapper.buildToCommentDto(commentRepository.save(comment1));
     }
