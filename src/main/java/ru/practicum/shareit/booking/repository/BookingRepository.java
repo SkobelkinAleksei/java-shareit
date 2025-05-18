@@ -24,9 +24,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByBookerIdAndStatus(Long bookerId, BookingStatus status, Pageable pageable);
 
     @Query("""
-                SELECT MAX(b.endTime) FROM Booking b
-                WHERE b.item.id = :itemId
-            """)
+            SELECT MAX(b.endTime)
+            FROM Booking b
+            WHERE b.item.id = :itemId
+           """)
     LocalDateTime findLastBookingEndDateByItemId(@Param("itemId") Long itemId);
 
     @Query("SELECT b FROM Booking b JOIN Item i ON b.item.id = i.id " +
