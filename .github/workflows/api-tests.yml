@@ -1,8 +1,27 @@
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Установка клиента psql
+      - name: Install postgresql-client
+        run: sudo apt-get install -y postgresql-client
+
+      # Проверка готовности базы данных
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+
+      # Остальные шаги по запуску тестов...
+
+  build:
+    uses: yandex-praktikum/java-shareit/.github/workflows/api-tests.yml@ci
 name: ShareIt API Tests
 
 on:
   pull_request:
-
-jobs:
-  build:
-    uses: yandex-praktikum/java-shareit/.github/workflows/api-tests.yml@ci
