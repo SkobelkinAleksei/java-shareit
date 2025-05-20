@@ -30,5 +30,3 @@ jobs:
             echo "Waiting for PostgreSQL..."
             sleep 2
           done
-
-      # Добавьте запуск тестов сюда-shareit/.github/workflows/api-tests.yml@ci
