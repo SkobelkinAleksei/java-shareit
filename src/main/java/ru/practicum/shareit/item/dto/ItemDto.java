@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item.dto;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class ItemDto {
     private Long id;
     private String name;

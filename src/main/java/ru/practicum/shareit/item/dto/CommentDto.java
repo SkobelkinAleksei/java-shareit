@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class CommentDto {
     private Long id;
 
