@@ -1,27 +1,8 @@
+name: ShareIt API Tests
+
+on:
+  pull_request:
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: postgres
-        options: >
-          --health-cmd "pg_isready -U postgres"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install postgresql-client
-        run: sudo apt-get install -y postgresql-client
-
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          until pg_isready -h localhost -p 5432 -U postgres; do
-            echo "Waiting for PostgreSQL..."
-            sleep 2
-          done
+  build:
+    uses: yandex-praktikum/java-shareit/.github/workflows/api-tests.yml@ci
