@@ -1,19 +1,44 @@
 package ru.practicum.shareit.item.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "items")
 public class Item {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
     @NotEmpty
+    @Column(name = "name", nullable = false)
     private String name;
-    @NotNull
+
+    @NotEmpty
+    @Column(name = "description", nullable = false)
     private String description;
-    @NotNull
+
+    @Column(name = "is_available", nullable = false)
     private Boolean available;
-    private Long owner;
-    private Long request;
+
+    @Column(name = "owner_id")
+    private Long ownerId;
+
+    @Column(name = "request_id")
+    private Long requestId;
+
+    @Column(name = "end_booking")
+    private LocalDateTime endBooking;
+
+    @Column(name = "start_booking")
+    private LocalDateTime startBooking;
 }
