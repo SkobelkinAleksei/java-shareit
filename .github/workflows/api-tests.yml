@@ -6,6 +6,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test
+        options: --health-cade "pg_isready -U postgres"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,9 +31,4 @@ jobs:
             sleep 2
           done
 
-      # Здесь добавьте шаги для запуска ваших тестов, например:
-      # - name: Run tests
-      #   run: ./gradlew test
-
-  build:
-    uses: yandex-praktikum/java-shareit/.github/workflows/api-tests.yml@ci
+      # Добавьте запуск тестов сюда-shareit/.github/workflows/api-tests.yml@ci
