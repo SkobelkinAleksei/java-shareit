@@ -12,6 +12,10 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findItemsByOwnerId(Long userId);
 
+    List<Item> findAllByRequestIdIn(List<Long> requestIds);
+
+    List<Item> findAllByRequestId(Long requestId);
+
     @Query("""
                 SELECT i FROM Item i
                 WHERE i.available = true
