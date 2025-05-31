@@ -81,10 +81,11 @@ public class ItemServiceImplTest {
     @Test
     public void testCreateItem() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(itemRepository.save(any(Item.class))).thenAnswer(invocation -> {
-            Item savedItem = invocation.getArgument(0);
-            savedItem.setId(100L);
-            return savedItem;
+        when(itemRepository.save(any(Item.class)))
+                .thenAnswer(invocation -> {
+                    Item savedItem = invocation.getArgument(0);
+                    savedItem.setId(100L);
+                    return savedItem;
         });
 
         Item newItem = new Item();
