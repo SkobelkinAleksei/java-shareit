@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
-import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
@@ -18,8 +17,6 @@ import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,7 +24,6 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ItemRequestServiceImpl implements ItemRequestService{
     private final UserService userService;
-    private final ItemService itemService;
     private final ItemRequestRepository itemRequestRepository;
     private final ItemRepository itemRepository;
 
@@ -60,7 +56,6 @@ public class ItemRequestServiceImpl implements ItemRequestService{
             throw new NotFoundException("Пользователь с таким id не найден");
         }
 
-        log.info(("%s'---------------------------------'").formatted(text));
         ItemRequest itemRequest = new ItemRequest();
         itemRequest.setRequestorId(userId);
         itemRequest.setDescription(text);

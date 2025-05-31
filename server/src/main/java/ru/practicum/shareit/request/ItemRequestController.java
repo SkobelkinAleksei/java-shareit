@@ -22,8 +22,6 @@ public class ItemRequestController {
     public ItemRequestDto createItemRequest(
             @RequestBody CreateItemRequestDto requestDto,
             @RequestHeader(value = userIdHeader, required = true) @Positive Long userId) {
-
-        log.info(("%s'---------------------------------'").formatted(requestDto.getDescription()));
         return requestService.createItemRequest(userId, requestDto.getDescription());
     }
 

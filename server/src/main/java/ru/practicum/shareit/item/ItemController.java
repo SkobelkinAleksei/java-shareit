@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/items")
 public class ItemController {
+    private final String userIdHeader = "X-Sharer-User-Id";
     private final ItemService itemService;
 
     @GetMapping("/{itemId}")
@@ -26,13 +27,13 @@ public class ItemController {
     }
 
     @PostMapping
-    public ItemDto createItem(@RequestBody @Valid Item item, @RequestHeader("X-Sharer-User-Id") Long userId) {
+    public ItemDto createItem(@RequestBody @Valid Item item, @RequestHeader(userIdHeader) Long userId) {
         log.info("Начинаем создание item: %s".formatted(item));
         return itemService.createItem(item, userId);
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ItemDto updateItem(@RequestHeader(userIdHeader) Long userId,
                               @RequestBody Item item,
                               @PathVariable Long itemId) {
         log.info("Начинаем обновление item: %s".formatted(item));
@@ -46,7 +47,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllFromUser(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemDto> getAllFromUser(@RequestHeader(userIdHeader) Long userId) {
         log.info("Начинаем получение всех item y user c id: %s".formatted(userId));
         return itemService.getAllFromUser(userId);
     }
@@ -58,7 +59,7 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/comment")
-    public CommentDto addComment(@PathVariable Long itemId, @RequestHeader("X-Sharer-User-Id") Long userId,
+    public CommentDto addComment(@PathVariable Long itemId, @RequestHeader(userIdHeader) Long userId,
                                  @Valid @RequestBody Comment dto) {
         log.info("Начинаем добавление к item: %s комментарий".formatted(itemId));
         return itemService.addComment(userId, itemId, dto);
