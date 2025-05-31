@@ -13,7 +13,6 @@ import java.util.Optional;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
-import ru.practicum.shareit.request.mapper.ItemRequestMapper;
 import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.request.service.ItemRequestServiceImpl;
@@ -83,7 +82,7 @@ public class ItemRequestServiceImplTest {
         itemReq.setId(requestId);
         itemReq.setDescription("desc");
         itemReq.setCreated(LocalDateTime.of(2023, 10, 10, 12, 0));
-        itemReq.setRequestorId (123L);
+        itemReq.setRequestorId(123L);
 
         when(itemRequestRepository.findById(requestId)).thenReturn(Optional.of(itemReq));
 
