@@ -24,7 +24,7 @@ public class BookingControllerTest {
     @MockBean
     private BookingService bookingService;
 
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String userIdHeader = "X-Sharer-User-Id";
 
     @Test
     public void createBookingRequestShouldReturnOk() throws Exception {
@@ -37,7 +37,7 @@ public class BookingControllerTest {
                 });
 
         mockMvc.perform(post("/bookings")
-                        .header(USER_ID_HEADER, 1)
+                        .header(userIdHeader, 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(status().isOk());
@@ -51,7 +51,7 @@ public class BookingControllerTest {
                 .thenReturn(new BookingsDtoBuilder().build());
 
         mockMvc.perform(patch("/bookings/1")
-                        .header(USER_ID_HEADER, 2)
+                        .header(userIdHeader, 2)
                         .param("approved", "true"))
                 .andExpect(status().isOk());
 
@@ -64,7 +64,7 @@ public class BookingControllerTest {
                 .thenReturn(new BookingsDtoBuilder().build());
 
         mockMvc.perform(get("/bookings/1")
-                        .header(USER_ID_HEADER, 2))
+                        .header(userIdHeader, 2))
                 .andExpect(status().isOk());
 
         verify(bookingService).getBookingById(anyLong(), eq(1L));
@@ -76,7 +76,7 @@ public class BookingControllerTest {
                 .thenReturn(Collections.singletonList(new BookingsDtoBuilder().build()));
 
         mockMvc.perform(get("/bookings")
-                        .header(USER_ID_HEADER, 1)
+                        .header(userIdHeader, 1)
                         .param("state", "ALL"))
                 .andExpect(status().isOk());
 
@@ -89,21 +89,10 @@ public class BookingControllerTest {
                 .thenReturn(Collections.singletonList(new BookingsDtoBuilder().build()));
 
         mockMvc.perform(get("/bookings/owner")
-                        .header(USER_ID_HEADER, 2)
+                        .header(userIdHeader, 2)
                         .param("state", "ALL"))
                 .andExpect(status().isOk());
 
         verify(bookingService).findByBooker(anyLong(), any(), any());
-    }
-}
-
-class BookingsDtoBuilder {
-    public BookingDto build() {
-        BookingDto dto = new BookingDto();
-        dto.setId(1L);
-        dto.setStart(LocalDateTime.now());
-        dto.setEnd(LocalDateTime.now().plusDays(1));
-        dto.setStatus(BookingStatus.WAITING);
-        return dto;
     }
 }
